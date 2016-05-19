@@ -1,1 +1,18 @@
 https://docs.python.org/3/howto/functional.html
+OK, but advocates for local mutation, and claims functional and OO clash - says that mutation
+of state is fundamental to OO. Probably doesn't realise to just make a new one?
+Their presentation of advantages are worth drawing on, but not optimal
+Is it worth having an example with iterators? Listcomps are more pythonic, and they probably know them.
+Goes through iters -> listcomp -> gen -> monadic chains :D
+Maybe draw on their explanation of map and filter?
+itertools has the standard functional collection operations
+functools - higher order functions
+
+https://www.ibm.com/developerworks/linux/library/l-prog/index.html
+Maybe add in 'what are pre reqs for a functional language?' section to explain that python has the things you need?
+
+why no standard TCO: http://neopythonic.blogspot.com.au/2009/04/tail-recursion-elimination.html, http://neopythonic.blogspot.com.au/2009/04/final-words-on-tail-calls.html
+
+implementation of TCO: https://github.com/baruchel/tco
+
+heavily preference implicit recursion over explicit because of lack of nice TCO
