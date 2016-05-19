@@ -3,7 +3,7 @@ OK, but advocates for local mutation, and claims functional and OO clash - says 
 of state is fundamental to OO. Probably doesn't realise to just make a new one?
 Their presentation of advantages are worth drawing on, but not optimal
 Is it worth having an example with iterators? Listcomps are more pythonic, and they probably know them.
-Goes through iters -> listcomp -> gen -> monadic chains :D
+Goes through iters -> listcomp -> gen -> monadic chains
 Maybe draw on their explanation of map and filter?
 itertools has the standard functional collection operations
 functools - higher order functions
@@ -13,6 +13,15 @@ Maybe add in 'what are pre reqs for a functional language?' section to explain t
 
 why no standard TCO: http://neopythonic.blogspot.com.au/2009/04/tail-recursion-elimination.html, http://neopythonic.blogspot.com.au/2009/04/final-words-on-tail-calls.html
 
-implementation of TCO: https://github.com/baruchel/tco
+implementation of TCO: https://github.com/baruchel/tco, http://baruchel.github.io/python/2015/11/07/explaining-functional-aspects-in-python/
 
-heavily preference implicit recursion over explicit because of lack of nice TCO
+Guido not a fan of FP, didn't mean to be influenced by FP - but users ended up implementing their own
+functions on collections that drew from FP.
+"In fact, the reduce function was removed from list of builtin functions in Python 3.0. (However, it's not necessary to send in complaints about the removal of lambda, map or filter: they are staying. :-)"
+use functools.reduce since they removed it.
+Asserts that TCO isn't possible because it's dynamic? Um...ruby? It does swallow stack traces though.
+Python not designed for explicitly recursive solutions - use the higher order functions that are internally iterative
+
+trampoline instead of TCO? http://blog.moertel.com/posts/2013-06-12-recursion-to-iteration-4-trampolines.html
+http://www.kylem.net/programming/tailcall.html
+
