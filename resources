@@ -25,3 +25,9 @@ Python not designed for explicitly recursive solutions - use the higher order fu
 trampoline instead of TCO? http://blog.moertel.com/posts/2013-06-12-recursion-to-iteration-4-trampolines.html
 http://www.kylem.net/programming/tailcall.html
 
+map, filter and reduce intro: http://www.bogotobogo.com/python/python_fncs_map_filter_reduce.php
+
+dive in to python chapter: http://www.diveintopython.net/functional_programming/index.html
+broad introduction, may be useful to draw on: https://codesachin.wordpress.com/2016/04/03/a-practical-introduction-to-functional-programming-for-python-coders/
+suggest as exercises: http://anandology.com/python-practice-book/functional-programming.html
+Another intro, heavy use of map, reduce, filter in python 2: https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming
