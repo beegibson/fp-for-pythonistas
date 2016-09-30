@@ -11830,7 +11830,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Functional-Programming-for-Pythonistas">Functional Programming for Pythonistas<a class="anchor-link" href="#Functional-Programming-for-Pythonistas">&#182;</a></h1><p>Bianca Gibson</p>
+<h1 id="Introduction-to-Functional-Programming">Introduction to Functional Programming<a class="anchor-link" href="#Introduction-to-Functional-Programming">&#182;</a></h1><p>Bianca Gibson</p>
 
 </div>
 </div>
@@ -11892,7 +11892,6 @@ a.anchor-link {
 <li>Immutability</li>
 <li>Putting off side effects</li>
 <li>Referential transparency</li>
-<li>monads</li>
 <li>Common traps when explaining to others</li>
 <li>How to learn more</li>
 </ul>
@@ -11954,6 +11953,7 @@ a.anchor-link {
 <li>Don't change values, use constants and the stack</li>
 <li>Instead of changing, create a new one</li>
 <li>Recursion and accumulators over loops and mutation</li>
+<li>how many of you are familiar with recursion?</li>
 <li>Confusion over passing by value or reference? Gone</li>
 </ul>
 
@@ -11981,7 +11981,7 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Item</span><span class="p">:</span>
@@ -12004,16 +12004,50 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">GST_MULTIPLIER</span> <span class="o">=</span> <span class="mf">1.1</span>
 
-<span class="k">def</span> <span class="nf">add_gst</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">with_gst</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
-
 <span class="k">def</span> <span class="nf">with_gst</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">Item</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">cost</span> <span class="o">*</span> <span class="n">GST_MULTIPLIER</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">add_gst_explicit_recursion</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+    <span class="n">head</span><span class="p">,</span> <span class="o">*</span><span class="n">tail</span> <span class="o">=</span> <span class="n">items</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">with_gst</span><span class="p">(</span><span class="n">head</span><span class="p">),)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">with_gst</span><span class="p">(</span><span class="n">head</span><span class="p">),)</span> <span class="o">+</span> <span class="n">add_gst_explicit_recursion</span><span class="p">(</span><span class="n">tail</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">add_gst_explicit_recursion</span><span class="p">([</span><span class="n">Item</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Item</span><span class="p">(</span><span class="mi">5</span><span class="p">)]))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(&lt;__main__.Item object at 0x7feb6d287a20&gt;, &lt;__main__.Item object at 0x7feb6d287c50&gt;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">add_gst</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">with_gst</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
 
 <span class="n">add_gst</span><span class="p">([</span><span class="n">Item</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Item</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
 </pre></div>
@@ -12026,11 +12060,11 @@ a.anchor-link {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[40]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[&lt;__main__.Item at 0x7f58f06e42b0&gt;, &lt;__main__.Item at 0x7f58f06e42e8&gt;]</pre>
+<pre>[11.0, 5.5]</pre>
 </div>
 
 </div>
@@ -12041,7 +12075,7 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">map_add_gst</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
@@ -12058,11 +12092,11 @@ a.anchor-link {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;map at 0x7f58f0f0f748&gt;</pre>
+<pre>&lt;map at 0x7fe98c20d278&gt;</pre>
 </div>
 
 </div>
@@ -12278,7 +12312,7 @@ a.anchor-link {
 </aside></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -12311,7 +12345,7 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_cost</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
@@ -12475,209 +12509,6 @@ a.anchor-link {
 </div>
 </div>
 
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Monads">Monads<a class="anchor-link" href="#Monads">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Has-constructor">Has constructor<a class="anchor-link" href="#Has-constructor">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Has-flatMap-aka-bind">Has flatMap aka bind<a class="anchor-link" href="#Has-flatMap-aka-bind">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="flatten(map(...))">flatten(map(...))<a class="anchor-link" href="#flatten(map(...))">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
-
-<span class="n">names</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;rharded &quot;</span><span class="p">,</span> <span class="s2">&quot;rane&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;hee &quot;</span><span class="p">,</span> <span class="s2">&quot;hammersky&quot;</span><span class="p">]]</span>
-
-<span class="k">def</span> <span class="nf">capitilise_all</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">names</span><span class="p">)</span>
-
-<span class="n">transformed_names</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">capitilise_all</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
-
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">transformed_names</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;map object at 0x7f58f06dfba8&gt;
-&lt;map object at 0x7f58f06df128&gt;
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[None, None]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">transformed_names</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">capitilise</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
-
-<span class="p">[[</span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">full_name</span><span class="p">]</span> <span class="k">for</span> <span class="n">full_name</span> <span class="ow">in</span> <span class="n">transformed_names</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Rharded 
-Rane
-Hee 
-Hammersky
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[92]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[[None, None], [None, None]]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">flatmap</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">iterable</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">iterable</span><span class="p">))</span>
-
-<span class="n">transformed_names</span> <span class="o">=</span> <span class="n">flatmap</span><span class="p">(</span><span class="n">capitilise</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
-
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">transformed_names</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Rharded 
-Rane
-Hee 
-Hammersky
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt output_prompt">Out[95]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[None, None, None, None]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Generally-also">Generally also<a class="anchor-link" href="#Generally-also">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="map">map<a class="anchor-link" href="#map">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="filter">filter<a class="anchor-link" href="#filter">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="often-reduce">often reduce<a class="anchor-link" href="#often-reduce">&#182;</a></h1>
-</div>
-</div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -12928,7 +12759,7 @@ Hammersky
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Questions">Questions<a class="anchor-link" href="#Questions">&#182;</a></h1><h2 id="github.com/biancaG/fp-for-pythonistas">github.com/biancaG/fp-for-pythonistas<a class="anchor-link" href="#github.com/biancaG/fp-for-pythonistas">&#182;</a></h2><h2 id="bianca.rachel.gibson@gmail.com">bianca.rachel.gibson@gmail.com<a class="anchor-link" href="#bianca.rachel.gibson@gmail.com">&#182;</a></h2>
+<h1 id="Questions">Questions<a class="anchor-link" href="#Questions">&#182;</a></h1><h2 id="github.com/biancaG/fp-for-pythonistas/tree/compcon">github.com/biancaG/fp-for-pythonistas/tree/compcon<a class="anchor-link" href="#github.com/biancaG/fp-for-pythonistas/tree/compcon">&#182;</a></h2><h2 id="bianca.rachel.gibson@gmail.com">bianca.rachel.gibson@gmail.com<a class="anchor-link" href="#bianca.rachel.gibson@gmail.com">&#182;</a></h2>
 </div>
 </div>
 </div></section></section>
