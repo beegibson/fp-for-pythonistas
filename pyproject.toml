@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "fp"
+version = "0.1.0"
+description = ""
+authors = ["Bee Gibson <bee@canva.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+jupyterlab = "*"
+pyzmq = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
